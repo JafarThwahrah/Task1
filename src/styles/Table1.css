@@ -1,0 +1,10 @@
+.adminEditBtn {
+  background-color: aqua;
+  border: none;
+  color: whitesmoke;
+  border-radius: 3px;
+}
+.adminEditBtn:hover {
+  cursor: pointer;
+  background-color: rgb(50, 187, 187);
+}

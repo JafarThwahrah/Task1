@@ -5,11 +5,11 @@ import Footer from "./components/layout/Footer";
 function App() {
   return (
     <>
-<BrowserRouter>
-<Header/>
-<Pages/>
-</BrowserRouter>
-<Footer/>
+      <BrowserRouter>
+        <Header />
+        <Pages />
+      </BrowserRouter>
+      <Footer />
     </>
   );
 }

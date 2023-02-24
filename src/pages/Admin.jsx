@@ -1,7 +1,8 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Table1 from "../components/admin/Table1";
 import AdminInfo from "../components/admin/AdminInfo";
+import Table2 from "../components/admin/Table2";
 const Admin = () => {
   const [info, setInfo] = useState({
     id: getCookie("id"),
@@ -9,7 +10,7 @@ const Admin = () => {
     name: getCookie("name"),
   });
 
-  const[checklogOut , setCheckLogOut]=useState(false)
+  const [checklogOut, setCheckLogOut] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -32,8 +33,15 @@ const Admin = () => {
   return (
     <>
       <h1 style={{ fontStyle: "oblique", textAlign: "center" }}>Admin Page</h1>
-      <AdminInfo info={info} setCheckLogOut={setCheckLogOut} setInfo={setInfo}/>
-<Table1/>
+      <AdminInfo
+        info={info}
+        setCheckLogOut={setCheckLogOut}
+        setInfo={setInfo}
+      />
+      <div className="infoAndBtnContainer">
+        <Table1 />
+        <Table2 />
+      </div>
     </>
   );
 };
