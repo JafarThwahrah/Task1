@@ -3,7 +3,6 @@ import Pages from "./pages/Pages";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import React from "react";
-import getCookie from "./custom/GetCookie";
 import { useState } from "react";
 
 export const MyContext = React.createContext();
