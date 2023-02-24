@@ -1,12 +1,17 @@
 import "../../styles/AdminInfo.css";
+import { useContext } from "react";
+import { MyContext } from "../../App";
 import axios from "axios";
 const AdminInfo = ({ info, setInfo, setCheckLogOut }) => {
+  const myContextValue = useContext(MyContext);
   const handleLogOut = () => {
     setInfo({});
     document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setCheckLogOut(true);
+    myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
+
     // const axiosAuth = "Bearer " + tokens;
     // axios.defaults.headers.common["Authorization"] = axiosAuth;
     // axios.get('https://staging-blockchain-payment.livaat.com/api/admins/logout').then((res)=>{

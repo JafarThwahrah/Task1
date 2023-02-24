@@ -29,7 +29,6 @@ const Admin = () => {
     }
     return null;
   }
-  console.log(info);
   return (
     <>
       <h1 style={{ fontStyle: "oblique", textAlign: "center" }}>Admin Page</h1>
