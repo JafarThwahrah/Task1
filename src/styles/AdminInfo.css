@@ -1,0 +1,33 @@
+.adminInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: .5px solid gray;
+    border-radius: 5px;
+}
+
+.logOutBtn{
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    font-size: large;
+    background-color:red;
+    color: white;
+    text-transform: uppercase;
+}
+
+.logOutBtn:hover{
+    cursor: pointer;
+}
+
+.infoAndBtnContainer{
+    margin: 5rem 20rem 5rem 20rem;
+
+}
+
+.nameAndEmail{
+    font-size: 14px;
+    color: gray;
+}
