@@ -15,6 +15,8 @@ import Button from "@mui/material/Button";
 import CreateCountry from "./CreateCountry";
 import Swal from "sweetalert2";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
+
 import { useState, useEffect } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -37,24 +39,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
 const Table2 = ({ token }) => {
   const [countriesList, setCountriesList] = useState();
+  const [pageNumber, setPageNumber] = useState(0);
+
   useEffect(() => {
     axios
       .get("https://staging-blockchain-payment.livaat.com/api/countries")
       .then((res) => {
-        setCountriesList(res.data.data.slice(0, 10));
+        setCountriesList(res.data.data);
         console.log(res);
       });
   }, []);
@@ -84,6 +77,47 @@ const Table2 = ({ token }) => {
       }
     });
   }
+
+  //pagination section
+
+  const rowsPerPage = 10;
+  const pagesVisited = pageNumber * rowsPerPage;
+  const displayUsers = countriesList
+    ?.slice(pagesVisited, pagesVisited + rowsPerPage)
+    .map((row) => {
+      return (
+        <StyledTableRow key={row.id}>
+          <StyledTableCell align="left">{row.id}</StyledTableCell>
+
+          <StyledTableCell component="th" scope="row">
+            {row.name}
+          </StyledTableCell>
+          <StyledTableCell align="center">{row.phone_code}</StyledTableCell>
+          <StyledTableCell align="left">{row.code}</StyledTableCell>
+          <StyledTableCell align="right">
+            <span className="countriesBtnContainer">
+              <Button variant="outlined" className="countriesViewBtn">
+                <RemoveRedEyeIcon />
+              </Button>
+              <Table2Dialog className="countriesEditBtn" />
+              <Button
+                variant="outlined"
+                className="countriesDeleteBtn"
+                onClick={handleDelete}
+              >
+                <DeleteIcon />
+              </Button>
+            </span>
+          </StyledTableCell>
+        </StyledTableRow>
+      );
+    });
+
+  const pageCount = Math.ceil(countriesList?.length / rowsPerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
   return (
     <>
       <h3 style={{ textAlign: "center", marginTop: "5rem" }}>Countries list</h3>
@@ -99,37 +133,19 @@ const Table2 = ({ token }) => {
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {countriesList?.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell align="left">{row.id}</StyledTableCell>
-
-                <StyledTableCell component="th" scope="row">
-                  {row.name}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.phone_code}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.code}</StyledTableCell>
-                <StyledTableCell align="right">
-                  <span className="countriesBtnContainer">
-                    <Button variant="outlined" className="countriesViewBtn">
-                      <RemoveRedEyeIcon />
-                    </Button>
-                    <Table2Dialog className="countriesEditBtn" />
-                    <Button
-                      variant="outlined"
-                      className="countriesDeleteBtn"
-                      onClick={handleDelete}
-                    >
-                      <DeleteIcon />
-                    </Button>
-                  </span>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
+          <TableBody>{displayUsers}</TableBody>
         </Table>
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"paginationBttns"}
+          previousLinkClassName={"previousBttn"}
+          nextLinkClassName={"nextBttn"}
+          disabledClassName={"paginationDisabled"}
+          activeClassName={"paginationActive"}
+        />
       </TableContainer>
     </>
   );

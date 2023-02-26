@@ -13,3 +13,39 @@
 .countriesEditBtn {
   margin: 10px !important;
 }
+
+.paginationBttns {
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBttns a {
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #1976d2 !important;
+  border: 1px solid;
+  border-color: #1976d2;
+}
+
+.paginationBttns a:hover {
+  color: white !important;
+  background-color: #1976d2;
+}
+
+.paginationActive a {
+  color: white !important;
+  background-color: #1976d2;
+}
+
+a.previousBttn {
+  border-radius: 7px;
+}
+a.nextBttn {
+  border-radius: 7px;
+}
