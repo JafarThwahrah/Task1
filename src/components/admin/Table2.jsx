@@ -14,6 +14,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import CreateCountry from "./CreateCountry";
 import Swal from "sweetalert2";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,7 +48,16 @@ const rows = [
   createData("Cupcake", 305, 3.7, 67, 4.3),
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
-const Table2 = () => {
+const Table2 = ({ token }) => {
+  const [countriesList, setCountriesList] = useState();
+  useEffect(() => {
+    axios
+      .get("https://staging-blockchain-payment.livaat.com/api/countries")
+      .then((res) => {
+        setCountriesList(res.data.data.slice(0, 10));
+        console.log(res);
+      });
+  }, []);
   function handleDelete() {
     Swal.fire({
       title: "Are you sure?",
@@ -75,36 +86,37 @@ const Table2 = () => {
   }
   return (
     <>
-      <h3 style={{ textAlign: "center" , marginTop:'5rem' }}>Countries list</h3>
+      <h3 style={{ textAlign: "center", marginTop: "5rem" }}>Countries list</h3>
       <CreateCountry />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell align="right">Row1</StyledTableCell>
-              <StyledTableCell align="right">Row2</StyledTableCell>
-              <StyledTableCell align="right">Row3</StyledTableCell>
-              <StyledTableCell align="right">Row4</StyledTableCell>
+              <StyledTableCell align="left">Country Name</StyledTableCell>
+              <StyledTableCell align="right">phone_code</StyledTableCell>
+              <StyledTableCell align="right">code</StyledTableCell>
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
+            {countriesList?.map((row) => (
+              <StyledTableRow key={row.id}>
+                <StyledTableCell align="left">{row.id}</StyledTableCell>
+
                 <StyledTableCell component="th" scope="row">
                   {row.name}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.phone_code}
+                </StyledTableCell>
+                <StyledTableCell align="left">{row.code}</StyledTableCell>
                 <StyledTableCell align="right">
                   <span className="countriesBtnContainer">
                     <Button variant="outlined" className="countriesViewBtn">
                       <RemoveRedEyeIcon />
                     </Button>
-                    <Table2Dialog />
+                    <Table2Dialog className="countriesEditBtn" />
                     <Button
                       variant="outlined"
                       className="countriesDeleteBtn"

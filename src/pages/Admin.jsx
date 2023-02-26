@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import Table1 from "../components/admin/Table1";
 import AdminInfo from "../components/admin/AdminInfo";
 import Table2 from "../components/admin/Table2";
+import getCookie from "../custom/GetCookie";
 const Admin = () => {
   const [info, setInfo] = useState({
     id: getCookie("id"),
     email: getCookie("email"),
     name: getCookie("name"),
+    token: getCookie("token"),
   });
 
   const [checklogOut, setCheckLogOut] = useState(false);
@@ -18,17 +20,7 @@ const Admin = () => {
       navigate(`/`);
     }
   }, [checklogOut]);
-  function getCookie(name) {
-    const cookieString = document.cookie;
-    const cookies = cookieString.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(`${name}=`)) {
-        return decodeURIComponent(cookie.substring(name.length + 1));
-      }
-    }
-    return null;
-  }
+
   return (
     <>
       <h1 style={{ fontStyle: "oblique", textAlign: "center" }}>Admin Page</h1>
@@ -38,8 +30,8 @@ const Admin = () => {
         setInfo={setInfo}
       />
       <div className="infoAndBtnContainer">
-        <Table1 />
-        <Table2 />
+        <Table1 token={info.token} />
+        <Table2 token={info.token} />
       </div>
     </>
   );

@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect,useContext } from "react";
+import { useEffect, useContext } from "react";
 import { MyContext } from "../App";
 
 import axios from "axios";
@@ -36,7 +36,6 @@ const Login = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
   const myContextValue = useContext(MyContext);
-
 
   useEffect(() => {
     if (loginData) {
@@ -100,8 +99,10 @@ const Login = () => {
         setCookie("id", `${res.data.data.id}`, 1);
         setCookie("email", `${res.data.data.email}`, 1);
         setCookie("name", `${res.data.data.name}`, 1);
+        setCookie("token", `${res.data.data.token}`, 1);
+
         setLoginData(res.data);
-        myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn)
+        myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
       })
       .catch((err) => {
         console.log(err);

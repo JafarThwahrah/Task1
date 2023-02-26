@@ -1,4 +1,15 @@
 .countriesBtnContainer {
   display: flex;
-  justify-content: space-around;
+}
+
+.countriesViewBtn {
+  margin: 10px !important;
+}
+
+.countriesDeleteBtn {
+  margin: 10px !important;
+}
+
+.countriesEditBtn {
+  margin: 10px !important;
 }

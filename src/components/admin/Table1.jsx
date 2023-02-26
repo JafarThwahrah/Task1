@@ -10,6 +10,9 @@ import Paper from "@mui/material/Paper";
 import "../../styles/Table1.css";
 import FormDialog from "./Table1Dialog";
 import CreateAdmin from "./CreateAdmin";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import getCookie from "../../custom/GetCookie";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,7 +45,19 @@ const rows = [
   createData("Cupcake", 305, 3.7, 67, 4.3),
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
-const Table1 = () => {
+const Table1 = ({ token }) => {
+  const [adminList, setAdminList] = useState();
+  useEffect(() => {
+    const headers = { Authorization: `${token}` };
+    axios
+      .get("https://staging-blockchain-payment.livaat.com/api/admin/config", {
+        headers,
+      })
+      .then((res) => {
+        setAdminList(res.data.data);
+        console.log(res);
+      });
+  }, []);
   return (
     <>
       <h3 style={{ textAlign: "center" }}>Admin list</h3>
@@ -56,19 +71,29 @@ const Table1 = () => {
               <StyledTableCell align="right">Row2</StyledTableCell>
               <StyledTableCell align="right">Row3</StyledTableCell>
               <StyledTableCell align="right">Row4</StyledTableCell>
+              <StyledTableCell align="right">Row5</StyledTableCell>
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
+            {adminList?.map((row) => (
+              <StyledTableRow key={row.id}>
                 <StyledTableCell component="th" scope="row">
-                  {row.name}
+                  {row.donate}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {row.management}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {row.nft_winner_shares}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {row.serene_winner_shares}
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.fees}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {row.award_value}
+                </StyledTableCell>
                 <StyledTableCell align="right">
                   <FormDialog />
                 </StyledTableCell>
