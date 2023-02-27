@@ -24,7 +24,7 @@ export default function CreateAdmin() {
         variant="contained"
         onClick={handleClickOpen}
       >
-        Create New Admin
+        Create New Config
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create Admin Config</DialogTitle>

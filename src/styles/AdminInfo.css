@@ -13,8 +13,13 @@
   border-radius: 5px;
   border: none;
   font-size: large;
-  background-color: red;
   color: white;
+  background: rgb(253, 29, 29);
+  background: linear-gradient(
+    90deg,
+    rgba(253, 29, 29, 0.9248074229691877) 52%,
+    rgba(252, 84, 69, 1) 100%
+  );
   text-transform: uppercase;
 }
 
@@ -29,4 +34,18 @@
 .nameAndEmail {
   font-size: 14px;
   color: gray;
+}
+
+@media only screen and (max-width: 600px) {
+  .nameAndEmail {
+    font-size: 12px;
+  }
+
+  .adminInfo > h4 {
+    font-size: 13px;
+  }
+
+  .adminInfo {
+    border: none;
+  }
 }

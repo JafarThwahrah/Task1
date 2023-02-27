@@ -48,7 +48,6 @@ const Table2 = ({ token }) => {
       .get("https://staging-blockchain-payment.livaat.com/api/countries")
       .then((res) => {
         setCountriesList(res.data.data);
-        console.log(res);
       });
   }, []);
   function handleDelete() {
