@@ -41,15 +41,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Table2 = ({ token }) => {
   const [countriesList, setCountriesList] = useState();
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     axios
-      .get("https://staging-blockchain-payment.livaat.com/api/countries")
+      .get(
+        `https://staging-blockchain-payment.livaat.com/api/countries?page=${pageNumber}`
+      )
       .then((res) => {
-        setCountriesList(res.data.data);
+        setCountriesList(res);
+        console.log(res);
       });
-  }, []);
+  }, [pageNumber]);
   function handleDelete() {
     Swal.fire({
       title: "Are you sure?",
@@ -81,41 +84,37 @@ const Table2 = ({ token }) => {
 
   const rowsPerPage = 10;
   const pagesVisited = pageNumber * rowsPerPage;
-  const displayUsers = countriesList
-    ?.slice(pagesVisited, pagesVisited + rowsPerPage)
-    .map((row) => {
-      return (
-        <StyledTableRow key={row.id}>
-          <StyledTableCell align="left">{row.id}</StyledTableCell>
+  const displayUsers = countriesList?.data?.data?.data?.map((row) => {
+    return (
+      <StyledTableRow key={row.id}>
+        <StyledTableCell align="left">{row.id}</StyledTableCell>
 
-          <StyledTableCell component="th" scope="row">
-            {row.name}
-          </StyledTableCell>
-          <StyledTableCell align="center">{row.phone_code}</StyledTableCell>
-          <StyledTableCell align="left">{row.code}</StyledTableCell>
-          <StyledTableCell align="right">
-            <span className="countriesBtnContainer">
-              <Button variant="outlined" className="countriesViewBtn">
-                <RemoveRedEyeIcon />
-              </Button>
-              <Table2Dialog className="countriesEditBtn" />
-              <Button
-                variant="outlined"
-                className="countriesDeleteBtn"
-                onClick={handleDelete}
-              >
-                <DeleteIcon />
-              </Button>
-            </span>
-          </StyledTableCell>
-        </StyledTableRow>
-      );
-    });
-
-  const pageCount = Math.ceil(countriesList?.length / rowsPerPage);
+        <StyledTableCell component="th" scope="row">
+          {row.name}
+        </StyledTableCell>
+        <StyledTableCell align="center">{row.phone_code}</StyledTableCell>
+        <StyledTableCell align="left">{row.code}</StyledTableCell>
+        <StyledTableCell align="right">
+          <span className="countriesBtnContainer">
+            <Button variant="outlined" className="countriesViewBtn">
+              <RemoveRedEyeIcon />
+            </Button>
+            <Table2Dialog className="countriesEditBtn" />
+            <Button
+              variant="outlined"
+              className="countriesDeleteBtn"
+              onClick={handleDelete}
+            >
+              <DeleteIcon />
+            </Button>
+          </span>
+        </StyledTableCell>
+      </StyledTableRow>
+    );
+  });
 
   const changePage = ({ selected }) => {
-    setPageNumber(selected);
+    setPageNumber(selected + 1);
   };
   return (
     <>
@@ -137,7 +136,7 @@ const Table2 = ({ token }) => {
         <ReactPaginate
           previousLabel={"Previous"}
           nextLabel={"Next"}
-          pageCount={pageCount}
+          pageCount={countriesList?.data?.data?.last_page}
           onPageChange={changePage}
           containerClassName={"paginationBttns"}
           previousLinkClassName={"previousBttn"}

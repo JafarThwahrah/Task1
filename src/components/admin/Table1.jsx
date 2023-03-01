@@ -83,7 +83,13 @@ const Table1 = ({ token }) => {
                 </StyledTableCell>
                 <StyledTableCell align="right">{row.fees}</StyledTableCell>
                 <StyledTableCell align="right">
-                  <FormDialog />
+                  <FormDialog
+                    id={row.id}
+                    donate={row.donate}
+                    management={row.management}
+                    nft_winner_shares={row.nft_winner_shares}
+                    award_value={row.award_value}
+                  />
                 </StyledTableCell>
               </StyledTableRow>
             ))}
