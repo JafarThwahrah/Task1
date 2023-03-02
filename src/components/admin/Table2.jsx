@@ -86,8 +86,6 @@ const Table2 = ({ token }) => {
 
   //pagination section
 
-  const rowsPerPage = 10;
-  const pagesVisited = pageNumber * rowsPerPage;
   const displayUsers = countriesList?.data?.data?.data?.map((row) => {
     return (
       <StyledTableRow key={row.id}>

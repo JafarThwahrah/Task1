@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { validate } from "../../custom/CountriesValidation";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -19,10 +19,35 @@ export default function Table2Dialog(props) {
     phone_code: props.phone_code,
   });
 
+  const [isSubmit, setIsSubmit] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      const headers = { authorization: props.token };
+      axios
+        .post(
+          "https://staging-blockchain-payment.livaat.com/api/countries/update",
+          textFieldValue,
+          { headers: headers }
+        )
+        .then((res) => {
+          setOpen(false);
+          Swal.fire(
+            "Success!",
+            "Country Information updated Successfully.",
+            "success"
+          );
+          props.setIsEdited(!props.isEdited);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [formErrors]);
 
   const handleClose = () => {
     setOpen(false);
@@ -33,28 +58,7 @@ export default function Table2Dialog(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(textFieldValue));
-    if (formErrors.name || formErrors.code || formErrors.phone_code) {
-      return;
-    }
-    const headers = { authorization: props.token };
-    axios
-      .post(
-        "https://staging-blockchain-payment.livaat.com/api/countries/update",
-        textFieldValue,
-        { headers: headers }
-      )
-      .then((res) => {
-        setOpen(false);
-        Swal.fire(
-          "Success!",
-          "Country Information updated Successfully.",
-          "success"
-        );
-        props.setIsEdited(!props.isEdited);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setIsSubmit(true);
   };
   return (
     <div>

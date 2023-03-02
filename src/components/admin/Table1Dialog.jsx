@@ -7,6 +7,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import "../../styles/Table1Dialog.css";
+import axios from "axios";
+import getCookie from "../../custom/GetCookie";
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -31,6 +33,20 @@ export default function FormDialog(props) {
   const handleSubmit = (e, id) => {
     e.preventDefault();
     setFormErrors(validate(textFieldValue));
+    const token = getCookie("token");
+    const headers = { authorization: token };
+    axios
+      .post(
+        "https://staging-blockchain-payment.livaat.com/api/admin/config/store",
+        textFieldValue,
+        { headers: headers }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const handleChange = (e) => {
     setTextFieldValue({
@@ -38,7 +54,6 @@ export default function FormDialog(props) {
       [e.target.name]: e.target.value,
     });
   };
-
   const validate = (data) => {
     const errors = {};
 

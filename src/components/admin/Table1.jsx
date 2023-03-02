@@ -77,7 +77,6 @@ const Table1 = ({ token }) => {
                 <StyledTableCell align="center">
                   {row.nft_winner_shares}
                 </StyledTableCell>
-
                 <StyledTableCell align="center">
                   {row.award_value}
                 </StyledTableCell>

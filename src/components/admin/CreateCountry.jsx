@@ -12,7 +12,7 @@ export default function CreateCountry({ token }) {
   const [open, setOpen] = React.useState(false);
   const [formValues, setFormValues] = React.useState({});
   const [formErrors, setFormErrors] = React.useState({});
-
+  const [isSubmit, setIsSubmit] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -26,24 +26,33 @@ export default function CreateCountry({ token }) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
+  React.useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      const headers = { Authorization: `${token}` };
+      axios
+        .post(
+          "https://staging-blockchain-payment.livaat.com/api/countries/create",
+          formValues,
+          { headers: headers }
+        )
+        .then((res) => {
+          setOpen(false);
+          Swal.fire(
+            "Success!",
+            "New country is added successfully.",
+            "success"
+          );
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [formErrors]);
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    const headers = { Authorization: `${token}` };
-    axios
-      .post(
-        "https://staging-blockchain-payment.livaat.com/api/countries/create",
-        formValues,
-        { headers: headers }
-      )
-      .then((res) => {
-        setOpen(false);
-        Swal.fire("Success!", "New country is added successfully.", "success");
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setIsSubmit(true);
   };
 
   return (
