@@ -5,9 +5,12 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useState } from "react";
+import "../../styles/Table1Dialog.css";
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const [textFieldValue, setTextFieldValue] = React.useState({
     donate: props.donate,
     management: props.management,
@@ -25,8 +28,9 @@ export default function FormDialog(props) {
     setOpen(false);
   };
 
-  const handleSubmit = (id) => {
-    console.log(id);
+  const handleSubmit = (e, id) => {
+    e.preventDefault();
+    setFormErrors(validate(textFieldValue));
   };
   const handleChange = (e) => {
     setTextFieldValue({
@@ -34,14 +38,42 @@ export default function FormDialog(props) {
       [e.target.name]: e.target.value,
     });
   };
+
+  const validate = (data) => {
+    const errors = {};
+
+    if (!data.donate) {
+      errors.donate = "donate is required";
+    }
+    if (!data.management) {
+      errors.management = "management is required";
+    }
+    if (!data.nft_winner_shares) {
+      errors.nft_winner_shares = "nft_winner_shares is required";
+    }
+    if (!data.serene_winner_shares) {
+      errors.serene_winner_shares = "serene_winner_shares is required";
+    }
+    if (!data.fees) {
+      errors.fees = "fees is required";
+    }
+    if (!data.award_value) {
+      errors.award_value = "award_value is required";
+    }
+
+    return errors;
+  };
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         Update
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Update Admin configuration</DialogTitle>
-        <DialogContent>
+        <DialogTitle className="dialogTitle">
+          Update Admin configuration
+        </DialogTitle>
+        <DialogContent className="dialogLayout">
+          <p className="formErrors">{formErrors?.donate}</p>
           <TextField
             autoFocus
             margin="dense"
@@ -54,6 +86,7 @@ export default function FormDialog(props) {
             value={textFieldValue.donate}
             onChange={handleChange}
           />
+          <p className="formErrors">{formErrors?.management}</p>
           <TextField
             autoFocus
             margin="dense"
@@ -65,6 +98,8 @@ export default function FormDialog(props) {
             variant="standard"
             value={textFieldValue.management}
           />
+          <p className="formErrors">{formErrors?.nft_winner_shares}</p>
+
           <TextField
             autoFocus
             margin="dense"
@@ -76,6 +111,8 @@ export default function FormDialog(props) {
             variant="standard"
             value={textFieldValue.nft_winner_shares}
           />
+          <p className="formErrors">{formErrors?.serene_winner_shares}</p>
+
           <TextField
             autoFocus
             margin="dense"
@@ -87,6 +124,8 @@ export default function FormDialog(props) {
             variant="standard"
             value={textFieldValue.serene_winner_shares}
           />
+          <p className="formErrors">{formErrors?.fees}</p>
+
           <TextField
             autoFocus
             margin="dense"
@@ -98,6 +137,8 @@ export default function FormDialog(props) {
             variant="standard"
             value={textFieldValue.fees}
           />
+          <p className="formErrors">{formErrors?.award_value}</p>
+
           <TextField
             autoFocus
             margin="dense"
@@ -112,7 +153,7 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={(e) => handleSubmit(props.id)}>Subscribe</Button>
+          <Button onClick={(e) => handleSubmit(e, props.id)}>Update</Button>
         </DialogActions>
       </Dialog>
     </div>

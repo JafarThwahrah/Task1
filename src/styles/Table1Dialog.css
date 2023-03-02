@@ -1,0 +1,12 @@
+.dialogLayout {
+  width: 30rem;
+}
+
+.dialogTitle {
+  text-align: center;
+}
+
+.formErrors {
+  color: red;
+  font-weight: bold;
+}

@@ -1,0 +1,15 @@
+.countryDetails {
+  height: 82vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.countryDetailsTitle {
+  font-style: oblique;
+}
+
+.countryInfoLine {
+  color: grey;
+}

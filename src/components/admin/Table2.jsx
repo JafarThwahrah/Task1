@@ -16,6 +16,7 @@ import CreateCountry from "./CreateCountry";
 import Swal from "sweetalert2";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import { useNavigate } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 
@@ -42,7 +43,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Table2 = ({ token }) => {
   const [countriesList, setCountriesList] = useState();
   const [pageNumber, setPageNumber] = useState(1);
-
+  const [isEdited, setIsEdited] = useState(false);
+  const navigate = useNavigate();
+  const handleView = (id) => {
+    navigate(`/admin/countries/view/${id}`);
+  };
   useEffect(() => {
     axios
       .get(
@@ -50,9 +55,8 @@ const Table2 = ({ token }) => {
       )
       .then((res) => {
         setCountriesList(res);
-        console.log(res);
       });
-  }, [pageNumber]);
+  }, [pageNumber, isEdited]);
   function handleDelete() {
     Swal.fire({
       title: "Are you sure?",
@@ -96,10 +100,23 @@ const Table2 = ({ token }) => {
         <StyledTableCell align="left">{row.code}</StyledTableCell>
         <StyledTableCell align="right">
           <span className="countriesBtnContainer">
-            <Button variant="outlined" className="countriesViewBtn">
+            <Button
+              onClick={(e) => handleView(row.id)}
+              variant="outlined"
+              className="countriesViewBtn"
+            >
               <RemoveRedEyeIcon />
             </Button>
-            <Table2Dialog className="countriesEditBtn" />
+            <Table2Dialog
+              setIsEdited={setIsEdited}
+              isEdited={isEdited}
+              token={token}
+              name={row.name}
+              phone_code={row.phone_code}
+              code={row.code}
+              id={row.id}
+              className="countriesEditBtn"
+            />
             <Button
               variant="outlined"
               className="countriesDeleteBtn"
@@ -119,7 +136,7 @@ const Table2 = ({ token }) => {
   return (
     <>
       <h3 style={{ textAlign: "center", marginTop: "5rem" }}>Countries list</h3>
-      <CreateCountry />
+      <CreateCountry token={token} />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -138,6 +155,8 @@ const Table2 = ({ token }) => {
           nextLabel={"Next"}
           pageCount={countriesList?.data?.data?.last_page}
           onPageChange={changePage}
+          pageRangeDisplayed={2}
+          breakLabel="..."
           containerClassName={"paginationBttns"}
           previousLinkClassName={"previousBttn"}
           nextLinkClassName={"nextBttn"}

@@ -4,13 +4,22 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import EditIcon from "@mui/icons-material/Edit";
-
-export default function Table2Dialog() {
+import { useState } from "react";
+import { validate } from "../../custom/CountriesValidation";
+import axios from "axios";
+import Swal from "sweetalert2";
+export default function Table2Dialog(props) {
   const [open, setOpen] = React.useState(false);
+  const [textFieldValue, setTextFieldValue] = useState({
+    id: props.id,
+    name: props.name,
+    code: props.code,
+    phone_code: props.phone_code,
+  });
 
+  const [formErrors, setFormErrors] = useState({});
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -18,7 +27,35 @@ export default function Table2Dialog() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleChange = (e) => {
+    setTextFieldValue({ ...textFieldValue, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(textFieldValue));
+    if (formErrors.name || formErrors.code || formErrors.phone_code) {
+      return;
+    }
+    const headers = { authorization: props.token };
+    axios
+      .post(
+        "https://staging-blockchain-payment.livaat.com/api/countries/update",
+        textFieldValue,
+        { headers: headers }
+      )
+      .then((res) => {
+        setOpen(false);
+        Swal.fire(
+          "Success!",
+          "Country Information updated Successfully.",
+          "success"
+        );
+        props.setIsEdited(!props.isEdited);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <Button
@@ -29,25 +66,55 @@ export default function Table2Dialog() {
         <EditIcon />
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
+        <DialogTitle className="dialogTitle">
+          Update Country Information
+        </DialogTitle>
+        <DialogContent className="dialogLayout">
+          <p className="formErrors">{formErrors?.name}</p>
+
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Email Address"
-            type="email"
+            name="name"
+            label="Country Name"
+            type="text"
             fullWidth
             variant="standard"
+            value={textFieldValue.name}
+            onChange={handleChange}
+          />
+          <p className="formErrors">{formErrors?.code}</p>
+
+          <TextField
+            autoFocus
+            margin="dense"
+            id="code"
+            name="code"
+            label="code"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={textFieldValue.code}
+            onChange={handleChange}
+          />
+          <p className="formErrors">{formErrors?.phone_code}</p>
+          <TextField
+            autoFocus
+            margin="dense"
+            name="phone_code"
+            id="phone_code"
+            label="Phone Code"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={textFieldValue.phone_code}
+            onChange={handleChange}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleSubmit}>Update</Button>
         </DialogActions>
       </Dialog>
     </div>
