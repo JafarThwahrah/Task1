@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { validate } from "../../custom/CountriesValidation";
 import axios from "axios";
 import Swal from "sweetalert2";
+
 export default function Table2Dialog(props) {
   const [open, setOpen] = React.useState(false);
   const [textFieldValue, setTextFieldValue] = useState({
@@ -24,7 +25,6 @@ export default function Table2Dialog(props) {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       const headers = { authorization: props.token };

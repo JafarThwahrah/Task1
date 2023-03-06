@@ -35,6 +35,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Table1 = ({ token }) => {
   const [adminList, setAdminList] = useState();
+  const [isEdited, setIsEdited] = useState(false);
+
   useEffect(() => {
     const headers = { Authorization: `${token}` };
     axios
@@ -42,9 +44,9 @@ const Table1 = ({ token }) => {
         headers,
       })
       .then((res) => {
-        setAdminList(res.data.data);
+        setAdminList([res.data.data]);
       });
-  }, []);
+  }, [isEdited]);
   return (
     <>
       <h3 style={{ textAlign: "center" }}>Admin list</h3>
@@ -54,24 +56,26 @@ const Table1 = ({ token }) => {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell align="center">Donate</StyledTableCell>
+              <StyledTableCell align="center"> Donate</StyledTableCell>
               <StyledTableCell align="right">Management</StyledTableCell>
               <StyledTableCell align="right">nft_winner_shares</StyledTableCell>
               <StyledTableCell align="right">award_value</StyledTableCell>
-              <StyledTableCell align="center">fees</StyledTableCell>
+              <StyledTableCell align="center">convert_fee</StyledTableCell>
+              <StyledTableCell align="center">cashout_fee</StyledTableCell>
+              <StyledTableCell align="center">enable_transfer</StyledTableCell>
+              <StyledTableCell align="center">max_qty_buy_nft</StyledTableCell>
+              <StyledTableCell align="center">
+                min_coins_buy_amount
+              </StyledTableCell>
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {adminList?.map((row) => (
               <StyledTableRow key={row.id}>
-                <StyledTableCell component="th" scope="row">
-                  {row.id}
-                </StyledTableCell>
-                <StyledTableCell component="th" scope="row">
-                  {row.donate}
-                </StyledTableCell>
-                <StyledTableCell align="right">
+                <StyledTableCell scope="row">{row.id}</StyledTableCell>
+                <StyledTableCell scope="row">{row.donate}</StyledTableCell>
+                <StyledTableCell align="center">
                   {row.management}
                 </StyledTableCell>
                 <StyledTableCell align="center">
@@ -80,10 +84,31 @@ const Table1 = ({ token }) => {
                 <StyledTableCell align="center">
                   {row.award_value}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.fees}</StyledTableCell>
-                <StyledTableCell align="right">
+                <StyledTableCell align="center">
+                  {row.convert_fee}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.cashout_fee}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.enable_transfer}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.max_qty_buy_nft}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.min_coins_buy_amount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
                   <FormDialog
+                    setIsEdited={setIsEdited}
+                    isEdited={isEdited}
                     id={row.id}
+                    cashout_fee={row.cashout_fee}
+                    convert_fee={row.convert_fee}
+                    enable_transfer={row.enable_transfer}
+                    max_qty_buy_nft={row.max_qty_buy_nft}
+                    min_coins_buy_amount={row.min_coins_buy_amount}
                     donate={row.donate}
                     management={row.management}
                     nft_winner_shares={row.nft_winner_shares}
