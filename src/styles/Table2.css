@@ -49,3 +49,11 @@ a.previousBttn {
 a.nextBttn {
   border-radius: 7px;
 }
+
+.CircularProgressTable2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 82vh;
+  width: 75vw;
+}

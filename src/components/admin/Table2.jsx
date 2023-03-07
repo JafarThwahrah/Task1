@@ -17,8 +17,8 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
-
 import { useState, useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,7 +44,9 @@ const Table2 = ({ token }) => {
   const [countriesList, setCountriesList] = useState();
   const [pageNumber, setPageNumber] = useState(1);
   const [isEdited, setIsEdited] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+
   const handleView = (id) => {
     navigate(`/admin/countries/view/${id}`);
   };
@@ -55,6 +57,7 @@ const Table2 = ({ token }) => {
       )
       .then((res) => {
         setCountriesList(res);
+        setIsLoading(false);
       });
   }, [pageNumber, isEdited]);
   function handleDelete() {
@@ -90,7 +93,6 @@ const Table2 = ({ token }) => {
     return (
       <StyledTableRow key={row.id}>
         <StyledTableCell align="left">{row.id}</StyledTableCell>
-
         <StyledTableCell component="th" scope="row">
           {row.name}
         </StyledTableCell>
@@ -130,6 +132,7 @@ const Table2 = ({ token }) => {
 
   const changePage = ({ selected }) => {
     setPageNumber(selected + 1);
+    setIsLoading(true);
   };
   return (
     <>
@@ -146,7 +149,14 @@ const Table2 = ({ token }) => {
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{displayUsers}</TableBody>
+          <TableBody>
+            {!isLoading && displayUsers}
+            {isLoading && (
+              <div className="CircularProgressTable2">
+                <CircularProgress />
+              </div>
+            )}
+          </TableBody>
         </Table>
         <ReactPaginate
           previousLabel={"Previous"}
