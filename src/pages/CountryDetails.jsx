@@ -20,8 +20,10 @@ const CountryDetails = () => {
         { headers: headers }
       )
       .then((res) => {
-        setCountryInfo(res.data.data);
-        setIsLoading(false);
+        setTimeout(() => {
+          setCountryInfo(res.data.data);
+          setIsLoading(false);
+        }, 500);
       })
       .catch((err) => {
         console.log(err);

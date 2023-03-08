@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
-import "../../styles/Table1Dialog.css";
+import "../../styles/EditDialog.css";
 import axios from "axios";
 import getCookie from "../../custom/GetCookie";
 import Swal from "sweetalert2";

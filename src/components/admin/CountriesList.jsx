@@ -7,8 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "../../styles/Table2.css";
-import Table2Dialog from "./Table2Dialog";
+import "../../styles/CountriesList.css";
+import Table2Dialog from "./EditCountryInfo";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
@@ -131,8 +131,10 @@ const Table2 = ({ token }) => {
   });
 
   const changePage = ({ selected }) => {
-    setPageNumber(selected + 1);
     setIsLoading(true);
+    setTimeout(() => {
+      setPageNumber(selected + 1);
+    }, 500);
   };
   return (
     <>

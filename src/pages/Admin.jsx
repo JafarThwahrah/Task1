@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Table1 from "../components/admin/Table1";
+import Table1 from "../components/admin/AdminConfigList";
 import AdminInfo from "../components/admin/AdminInfo";
-import Table2 from "../components/admin/Table2";
+import Table2 from "../components/admin/CountriesList";
 import getCookie from "../custom/GetCookie";
 const Admin = () => {
   const [info, setInfo] = useState({
