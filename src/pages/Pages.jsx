@@ -9,6 +9,8 @@ const Pages = () => {
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/countries/view/:id" element={<CountryDetails />} />
+        {/* <Route path="/unauthorized" element={<CountryDetails />} />
+        <Route path="*" element={<CountryDetails />} /> */}
       </Routes>
     </>
   );
