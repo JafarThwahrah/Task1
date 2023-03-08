@@ -4,7 +4,7 @@ const Err = () => {
     <>
       <div className="pageNotFoundContainer">
         <h3 className="notFoundText">Page Not Found</h3>
-        <h3 className="notFoundText Text404">404</h3>
+        <h3 className="notFoundText">404</h3>
       </div>
     </>
   );
