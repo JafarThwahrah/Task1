@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState, useEffect } from "react";
-import { validate } from "../../custom/CountriesValidation";
+import { validate } from "../../customHooks/CountriesValidation";
 import axios from "axios";
 import Swal from "sweetalert2";
 

@@ -5,37 +5,28 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useState } from "react";
-import "../../styles/DialogLayout.css";
-import axios from "axios";
-import getCookie from "../../customHooks/GetCookie";
 import Swal from "sweetalert2";
+import axios from "axios";
+import { useState } from "react";
+import getCookie from "../../customHooks/GetCookie";
 import validate from "../../customHooks/AdminConfigValidation";
 
-export default function FormDialog(props) {
+export default function CreateAdmin() {
   const [open, setOpen] = React.useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [textFieldValue, setTextFieldValue] = React.useState({
-    id: props.id,
-    donate: props.donate,
-    convert_fee: props.convert_fee,
-    cashout_fee: props.cashout_fee,
-    enable_transfer: props.enable_transfer,
-    max_qty_buy_nft: props.max_qty_buy_nft,
-    min_coins_buy_amount: props.min_coins_buy_amount,
-    management: props.management,
-    nft_winner_shares: props.nft_winner_shares,
-    award_value: props.award_value,
-    months_of_declare_shares: props.months_of_declare_shares,
+    id: "",
+    donate: "",
+    convert_fee: "",
+    cashout_fee: "",
+    enable_transfer: "",
+    max_qty_buy_nft: "",
+    min_coins_buy_amount: "",
+    management: "",
+    nft_winner_shares: "",
+    award_value: "",
+    months_of_declare_shares: "",
   });
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,14 +35,13 @@ export default function FormDialog(props) {
     const headers = { authorization: token };
     axios
       .post(
-        "https://staging-blockchain-payment.livaat.com/api/admin/config/update",
+        "https://staging-blockchain-payment.livaat.com/api/admin/config/store",
         textFieldValue,
         { headers: headers }
       )
       .then((res) => {
         console.log(res);
         setOpen(false);
-        props.setIsEdited(!props.isEdited);
         Swal.fire(
           "Success!",
           "Admin Configuration updated Successfully.",
@@ -68,16 +58,25 @@ export default function FormDialog(props) {
       [e.target.name]: e.target.value,
     });
   };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Update
+      <Button
+        style={{ marginBottom: "1rem" }}
+        variant="contained"
+        onClick={handleClickOpen}
+      >
+        Create New Config
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialogTitle">
-          Update Admin configuration
-        </DialogTitle>
+        <DialogTitle>Create Admin Config</DialogTitle>
         <DialogContent className="dialogLayout">
           <p className="formErrors">{formErrors?.donate}</p>
           <TextField
@@ -227,7 +226,7 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={(e) => handleSubmit(e, props.id)}>Update</Button>
+          <Button onClick={handleSubmit}>Create</Button>
         </DialogActions>
       </Dialog>
     </div>

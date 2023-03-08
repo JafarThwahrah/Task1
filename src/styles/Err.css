@@ -1,0 +1,11 @@
+.pageNotFoundContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 82vh;
+  flex-direction: column;
+}
+
+.pageNotFoundContainer .notFoundText {
+  font-size: 2rem;
+}

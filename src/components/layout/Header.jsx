@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useState, useEffect } from "react";
-import getCookie from "../../custom/GetCookie";
+import getCookie from "../../customHooks/GetCookie";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { MyContext } from "../../App";

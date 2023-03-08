@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import getCookie from "../custom/GetCookie";
+import getCookie from "../customHooks/GetCookie";
 import axios from "axios";
 import { useState } from "react";
 import "../styles/CountryDetails.css";

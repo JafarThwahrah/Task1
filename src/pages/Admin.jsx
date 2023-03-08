@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Table1 from "../components/admin/AdminConfigList";
 import AdminInfo from "../components/admin/AdminInfo";
 import Table2 from "../components/admin/CountriesList";
-import getCookie from "../custom/GetCookie";
+import getCookie from "../customHooks/GetCookie";
 const Admin = () => {
   const [info, setInfo] = useState({
     id: getCookie("id"),

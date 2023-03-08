@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { validate } from "../../custom/CountriesValidation";
+import { validate } from "../../customHooks/CountriesValidation";
 export default function CreateCountry({ token }) {
   const [open, setOpen] = React.useState(false);
   const [formValues, setFormValues] = React.useState({});

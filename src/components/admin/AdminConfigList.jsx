@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "../../styles/AdminConfigList.css";
 import FormDialog from "./EditAdminConfig";
-import CreateAdmin from "./CreateAdmin";
+import CreateAdmin from "./CreateAdminConfig";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -47,6 +47,7 @@ const Table1 = ({ token }) => {
         setAdminList([res.data.data]);
       });
   }, [isEdited]);
+  console.log(adminList);
   return (
     <>
       <h3 style={{ textAlign: "center" }}>Admin list</h3>
@@ -113,6 +114,7 @@ const Table1 = ({ token }) => {
                     management={row.management}
                     nft_winner_shares={row.nft_winner_shares}
                     award_value={row.award_value}
+                    months_of_declare_shares={row.months_of_declare_shares}
                   />
                 </StyledTableCell>
               </StyledTableRow>
