@@ -140,8 +140,6 @@ const Header = () => {
                 ""
               )}
             </Box>
-
-            <Box sx={{ flexGrow: 0 }}></Box>
           </Toolbar>
         </Container>
       </AppBar>

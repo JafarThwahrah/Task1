@@ -3,11 +3,9 @@ import "../../styles/Footer.css";
 
 function Footer() {
   return (
-    <div className="footer">
-      <footer>
+    <footer className="footer">
       <p className="copywrite">&copy; Jafar Thwahrah</p>
-      </footer>
-    </div>
+    </footer>
   );
 }
 
