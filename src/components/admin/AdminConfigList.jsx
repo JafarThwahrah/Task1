@@ -33,7 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Table1 = ({ token }) => {
+const AdminConfigList = ({ token }) => {
   const [adminList, setAdminList] = useState();
   const [isEdited, setIsEdited] = useState(false);
 
@@ -46,8 +46,7 @@ const Table1 = ({ token }) => {
       .then((res) => {
         setAdminList([res.data.data]);
       });
-  }, [isEdited]);
-  console.log(adminList);
+  }, [isEdited, token]);
   return (
     <>
       <h3 style={{ textAlign: "center" }}>Admin list</h3>
@@ -59,14 +58,16 @@ const Table1 = ({ token }) => {
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell align="center"> Donate</StyledTableCell>
               <StyledTableCell align="right">Management</StyledTableCell>
-              <StyledTableCell align="right">nft_winner_shares</StyledTableCell>
-              <StyledTableCell align="right">award_value</StyledTableCell>
-              <StyledTableCell align="center">convert_fee</StyledTableCell>
-              <StyledTableCell align="center">cashout_fee</StyledTableCell>
-              <StyledTableCell align="center">enable_transfer</StyledTableCell>
-              <StyledTableCell align="center">max_qty_buy_nft</StyledTableCell>
+              <StyledTableCell align="right">Nft winner shares</StyledTableCell>
+              <StyledTableCell align="right">Award value</StyledTableCell>
+              <StyledTableCell align="center">Convert fee</StyledTableCell>
+              <StyledTableCell align="center">Cashout fee</StyledTableCell>
+              <StyledTableCell align="center">Enable transfer</StyledTableCell>
               <StyledTableCell align="center">
-                min_coins_buy_amount
+                Max Quantity buy nft
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                Min coins buy amount
               </StyledTableCell>
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
@@ -126,4 +127,4 @@ const Table1 = ({ token }) => {
   );
 };
 
-export default Table1;
+export default AdminConfigList;

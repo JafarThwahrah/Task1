@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { validate } from "../../customHooks/CountriesValidation";
+
 export default function CreateCountry({ token }) {
   const [open, setOpen] = React.useState(false);
   const [formValues, setFormValues] = React.useState({});
@@ -37,24 +38,24 @@ export default function CreateCountry({ token }) {
         )
         .then((res) => {
           setOpen(false);
+          setFormValues({});
+          setIsSubmit(false);
           Swal.fire(
             "Success!",
             "New country is added successfully.",
             "success"
           );
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [formErrors]);
+  }, [formErrors, isSubmit, token, formValues]);
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
   };
-
   return (
     <div>
       <Button

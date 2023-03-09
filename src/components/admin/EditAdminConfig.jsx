@@ -26,7 +26,9 @@ export default function FormDialog(props) {
     management: props.management,
     nft_winner_shares: props.nft_winner_shares,
     award_value: props.award_value,
-    months_of_declare_shares: props.months_of_declare_shares,
+    months_of_declare_shares: props.months_of_declare_shares
+      ? props.months_of_declare_shares
+      : "",
   });
 
   const handleClickOpen = () => {
@@ -112,7 +114,7 @@ export default function FormDialog(props) {
             margin="dense"
             id="nft_winner_shares"
             name="nft_winner_shares"
-            label="nft_winner_shares"
+            label="Nft winner shares"
             type="text"
             fullWidth
             variant="standard"
@@ -127,7 +129,7 @@ export default function FormDialog(props) {
             margin="dense"
             id="cashout_fee"
             name="cashout_fee"
-            label="cashout_fee"
+            label="Cashout fee"
             type="text"
             fullWidth
             variant="standard"
@@ -142,7 +144,7 @@ export default function FormDialog(props) {
             margin="dense"
             id="convert_fee"
             name="convert_fee"
-            label="convert_fee"
+            label="Convert fee"
             type="text"
             fullWidth
             variant="standard"
@@ -157,7 +159,7 @@ export default function FormDialog(props) {
             margin="dense"
             id="enable_transfer"
             name="enable_transfer"
-            label="enable_transfer"
+            label="Enable transfer"
             type="text"
             fullWidth
             variant="standard"
@@ -172,7 +174,7 @@ export default function FormDialog(props) {
             margin="dense"
             id="max_qty_buy_nft"
             name="max_qty_buy_nft"
-            label="max_qty_buy_nft"
+            label="Max quantity buy nft"
             type="text"
             fullWidth
             variant="standard"
@@ -187,7 +189,7 @@ export default function FormDialog(props) {
             margin="dense"
             id="min_coins_buy_amount"
             name="min_coins_buy_amount"
-            label="min_coins_buy_amount"
+            label="Min coins buy amount"
             type="text"
             fullWidth
             variant="standard"
@@ -202,7 +204,7 @@ export default function FormDialog(props) {
             margin="dense"
             id="months_of_declare_shares"
             name="months_of_declare_shares"
-            label="months_of_declare_shares"
+            label="Months of declare shares"
             type="text"
             fullWidth
             variant="standard"
@@ -217,7 +219,7 @@ export default function FormDialog(props) {
             margin="dense"
             id="award_value"
             name="award_value"
-            label="award_value"
+            label="Award value"
             type="text"
             fullWidth
             variant="standard"

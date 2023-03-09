@@ -11,17 +11,18 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useState, useEffect } from "react";
 import getCookie from "../../customHooks/GetCookie";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { MyContext } from "../../App";
+import { Button } from "@mui/material";
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [loginData, setLoginData] = useState();
   const myContextValue = useContext(MyContext);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    setLoginData(getCookie("id") ? getCookie("id") : null);
+    setLoginData(getCookie("token") ? getCookie("token") : null);
   }, [myContextValue.isLoggedIn]);
 
   const handleOpenNavMenu = (event) => {
@@ -30,6 +31,15 @@ const Header = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleLogout = () => {
+    document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
+    navigate(`/`);
   };
   return (
     <>
@@ -116,6 +126,16 @@ const Header = () => {
                 >
                   Admin Page
                 </Link>
+              ) : (
+                ""
+              )}
+            </Box>
+
+            <Box>
+              {loginData ? (
+                <Button style={{ color: "white" }} onClick={handleLogout}>
+                  Logout
+                </Button>
               ) : (
                 ""
               )}

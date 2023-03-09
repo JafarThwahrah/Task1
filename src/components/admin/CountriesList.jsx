@@ -40,7 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Table2 = ({ token }) => {
+const CountriesList = ({ token }) => {
   const [countriesList, setCountriesList] = useState();
   const [pageNumber, setPageNumber] = useState(1);
   const [isEdited, setIsEdited] = useState(false);
@@ -151,15 +151,13 @@ const Table2 = ({ token }) => {
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {!isLoading && displayUsers}
-            {isLoading && (
-              <div className="CircularProgressTable2">
-                <CircularProgress />
-              </div>
-            )}
-          </TableBody>
+          <TableBody>{!isLoading && displayUsers}</TableBody>
         </Table>
+        {isLoading && (
+          <div className="CircularProgressTable2">
+            <CircularProgress />
+          </div>
+        )}
         <ReactPaginate
           previousLabel={"Previous"}
           nextLabel={"Next"}
@@ -178,4 +176,4 @@ const Table2 = ({ token }) => {
   );
 };
 
-export default Table2;
+export default CountriesList;

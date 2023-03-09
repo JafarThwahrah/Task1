@@ -9,7 +9,7 @@ export const MyContext = React.createContext();
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const contextValues = {
+  const checkLogIn = {
     isLoggedIn,
     setIsLoggedIn,
   };
@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <MyContext.Provider value={contextValues}>
+        <MyContext.Provider value={checkLogIn}>
           <Header />
           <Pages />
         </MyContext.Provider>

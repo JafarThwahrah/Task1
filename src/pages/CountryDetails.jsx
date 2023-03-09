@@ -8,7 +8,6 @@ import { CircularProgress } from "@mui/material";
 const CountryDetails = () => {
   const [countryInfo, setCountryInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
   const token = getCookie("token");
   const params = useParams();
   useEffect(() => {
@@ -28,7 +27,7 @@ const CountryDetails = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [params.id, token]);
   return (
     <>
       {!isLoading && (
