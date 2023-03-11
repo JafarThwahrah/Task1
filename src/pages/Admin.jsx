@@ -1,6 +1,6 @@
-import AdminConfigList from "../components/admin/AdminConfigList";
-import AdminInfo from "../components/admin/AdminInfo";
-import CountriesList from "../components/admin/CountriesList";
+import AdminConfigList from "../components/adminPageComponents/AdminConfigList";
+import AdminInfo from "../components/adminPageComponents/AdminInfo";
+import CountriesList from "../components/adminPageComponents/CountriesList";
 import getCookie from "../customHooks/GetCookie";
 
 const Admin = () => {

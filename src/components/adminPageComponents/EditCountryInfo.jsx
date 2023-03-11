@@ -47,7 +47,7 @@ export default function Table2Dialog(props) {
           console.log(err);
         });
     }
-  }, [formErrors]);
+  }, [formErrors, isSubmit, textFieldValue, props]);
 
   const handleClose = () => {
     setOpen(false);
