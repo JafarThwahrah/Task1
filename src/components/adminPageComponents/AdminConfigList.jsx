@@ -11,6 +11,7 @@ import "../../styles/AdminConfigList.css";
 import FormDialog from "./EditAdminConfig";
 import CreateAdmin from "./CreateAdminConfig";
 import { useState, useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -36,6 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const AdminConfigList = ({ token }) => {
   const [adminList, setAdminList] = useState();
   const [isEdited, setIsEdited] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const headers = { Authorization: `${token}` };
@@ -45,6 +47,7 @@ const AdminConfigList = ({ token }) => {
       })
       .then((res) => {
         setAdminList([res.data.data]);
+        setIsLoading(false);
       });
   }, [isEdited, token]);
   return (
@@ -73,55 +76,61 @@ const AdminConfigList = ({ token }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {adminList?.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell scope="row">{row.id}</StyledTableCell>
-                <StyledTableCell scope="row">{row.donate}</StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.management}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.nft_winner_shares}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.award_value}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.convert_fee}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.cashout_fee}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.enable_transfer}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.max_qty_buy_nft}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.min_coins_buy_amount}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <FormDialog
-                    setIsEdited={setIsEdited}
-                    isEdited={isEdited}
-                    id={row.id}
-                    cashout_fee={row.cashout_fee}
-                    convert_fee={row.convert_fee}
-                    enable_transfer={row.enable_transfer}
-                    max_qty_buy_nft={row.max_qty_buy_nft}
-                    min_coins_buy_amount={row.min_coins_buy_amount}
-                    donate={row.donate}
-                    management={row.management}
-                    nft_winner_shares={row.nft_winner_shares}
-                    award_value={row.award_value}
-                    months_of_declare_shares={row.months_of_declare_shares}
-                  />
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {!isLoading &&
+              adminList?.map((row) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell scope="row">{row.id}</StyledTableCell>
+                  <StyledTableCell scope="row">{row.donate}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.management}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.nft_winner_shares}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.award_value}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.convert_fee}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.cashout_fee}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.enable_transfer}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.max_qty_buy_nft}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.min_coins_buy_amount}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <FormDialog
+                      setIsEdited={setIsEdited}
+                      isEdited={isEdited}
+                      id={row.id}
+                      cashout_fee={row.cashout_fee}
+                      convert_fee={row.convert_fee}
+                      enable_transfer={row.enable_transfer}
+                      max_qty_buy_nft={row.max_qty_buy_nft}
+                      min_coins_buy_amount={row.min_coins_buy_amount}
+                      donate={row.donate}
+                      management={row.management}
+                      nft_winner_shares={row.nft_winner_shares}
+                      award_value={row.award_value}
+                      months_of_declare_shares={row.months_of_declare_shares}
+                    />
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
           </TableBody>
         </Table>
+        {isLoading && (
+          <div className="CircularAdminConfigList">
+            <CircularProgress />
+          </div>
+        )}
       </TableContainer>
     </>
   );

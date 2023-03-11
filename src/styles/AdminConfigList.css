@@ -8,3 +8,10 @@
   cursor: pointer;
   background-color: rgb(50, 187, 187);
 }
+
+.CircularAdminConfigList {
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
