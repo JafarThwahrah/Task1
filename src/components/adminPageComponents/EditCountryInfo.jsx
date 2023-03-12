@@ -35,16 +35,27 @@ export default function Table2Dialog(props) {
           { headers: headers }
         )
         .then((res) => {
-          setOpen(false);
-          Swal.fire(
-            "Success!",
-            "Country Information updated Successfully.",
-            "success"
-          );
+          if (res.status === 200) {
+            setOpen(false);
+            Swal.fire(
+              "Success!",
+              "Country Information updated Successfully.",
+              "success"
+            );
+          }
           props.setIsEdited(!props.isEdited);
         })
         .catch((err) => {
-          console.log(err);
+          if (err.response.status === 401) {
+            setOpen(false);
+            Swal.fire({
+              icon: "error",
+              title: "Unauthorized",
+              text: `You are unauthorized to do this action! Please Login Again`,
+            });
+          } else {
+            console.log(err);
+          }
         });
     }
   }, [formErrors, isSubmit]);

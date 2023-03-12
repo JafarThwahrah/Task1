@@ -61,7 +61,16 @@ export default function FormDialog(props) {
         );
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          setOpen(false);
+          Swal.fire({
+            icon: "error",
+            title: "Unauthorized",
+            text: `You are unauthorized to do this action! Please Login Again`,
+          });
+        } else {
+          console.log(err);
+        }
       });
   };
   const handleChange = (e) => {

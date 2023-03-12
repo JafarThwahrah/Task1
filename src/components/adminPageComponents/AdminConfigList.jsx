@@ -13,6 +13,9 @@ import CreateAdmin from "./CreateAdminConfig";
 import { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { MyContext } from "../../App";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,7 +41,8 @@ const AdminConfigList = ({ token }) => {
   const [adminList, setAdminList] = useState();
   const [isEdited, setIsEdited] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  const myContextValue = useContext(MyContext);
+  const navigate = useNavigate();
   useEffect(() => {
     const headers = { Authorization: `${token}` };
     axios
@@ -48,6 +52,22 @@ const AdminConfigList = ({ token }) => {
       .then((res) => {
         setAdminList([res.data.data]);
         setIsLoading(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          document.cookie =
+            "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          document.cookie =
+            "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          document.cookie =
+            "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          document.cookie =
+            "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
+          navigate(`/`);
+        } else {
+          console.log(err);
+        }
       });
   }, [isEdited, token]);
   return (
