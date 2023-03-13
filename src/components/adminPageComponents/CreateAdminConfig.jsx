@@ -77,7 +77,7 @@ export default function CreateAdmin() {
         Create New Config
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create Admin Config</DialogTitle>
+        <DialogTitle>Create Admin configuration</DialogTitle>
         <DialogContent className="dialogLayout">
           <p className="formErrors">{formErrors?.donate}</p>
           <TextField

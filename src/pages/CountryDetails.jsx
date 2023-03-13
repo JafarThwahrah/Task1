@@ -5,9 +5,12 @@ import axios from "axios";
 import { useState } from "react";
 import "../styles/CountryDetails.css";
 import { CircularProgress } from "@mui/material";
+import useLogout from "../customHooks/Logout";
+
 const CountryDetails = () => {
   const [countryInfo, setCountryInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const { logout } = useLogout();
   const token = getCookie("token");
   const params = useParams();
   useEffect(() => {
@@ -25,7 +28,11 @@ const CountryDetails = () => {
         }, 500);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          logout();
+        } else {
+          console.log(err);
+        }
       });
   }, [params.id, token]);
   return (

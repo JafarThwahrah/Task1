@@ -92,9 +92,10 @@ const Login = () => {
         myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response.status === 401) {
+        if (err?.response?.status === 401) {
           setFormErrors({ creds: "wrong email or password" });
+        } else {
+          console.log(err);
         }
       });
   };

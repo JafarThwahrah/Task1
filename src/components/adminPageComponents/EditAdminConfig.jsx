@@ -51,7 +51,6 @@ export default function FormDialog(props) {
         { headers: headers }
       )
       .then((res) => {
-        console.log(res);
         setOpen(false);
         props.setIsEdited(!props.isEdited);
         Swal.fire(

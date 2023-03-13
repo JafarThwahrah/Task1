@@ -15,12 +15,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { MyContext } from "../../App";
 import { Button } from "@mui/material";
-
+import useLogout from "../../customHooks/Logout";
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [loginData, setLoginData] = useState();
   const myContextValue = useContext(MyContext);
-  const navigate = useNavigate();
+  const { logout } = useLogout();
+
   useEffect(() => {
     setLoginData(getCookie("token") ? getCookie("token") : null);
   }, [myContextValue.isLoggedIn]);
@@ -34,12 +35,7 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
-    navigate(`/`);
+    logout();
   };
   return (
     <>
