@@ -15,7 +15,6 @@ const useLogout = () => {
           "https://staging-blockchain-payment.livaat.com/api/admins/logout",
           { headers }
         );
-        console.log(response);
         document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie =
           "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
