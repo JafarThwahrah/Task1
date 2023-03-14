@@ -11,10 +11,6 @@ const useLogout = () => {
     const headers = { Authorization: `${token}` };
     const req = async () => {
       try {
-        const response = await axios.get(
-          "https://staging-blockchain-payment.livaat.com/api/admins/logout",
-          { headers }
-        );
         document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie =
           "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -24,6 +20,10 @@ const useLogout = () => {
           "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
         navigate(`/`);
+        const response = await axios.get(
+          "https://staging-blockchain-payment.livaat.com/api/admins/logout",
+          { headers }
+        );
       } catch (err) {
         console.error(err);
       }
