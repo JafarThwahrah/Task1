@@ -9,20 +9,27 @@ const useLogout = () => {
   const logout = () => {
     const token = getCookie("token");
     const headers = { Authorization: `${token}` };
-    axios
-      .get("https://staging-blockchain-payment.livaat.com/api/admins/logout", {
-        headers,
-      })
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
-    document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
-    navigate(`/`);
+    const req = async () => {
+      try {
+        const response = await axios.get(
+          "https://staging-blockchain-payment.livaat.com/api/admins/logout",
+          { headers }
+        );
+        console.log(response);
+        document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+          "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+          "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+          "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
+        navigate(`/`);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    req();
   };
 
   return { logout };
