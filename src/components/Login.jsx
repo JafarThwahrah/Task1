@@ -10,11 +10,11 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useRef } from "react";
 import { MyContext } from "../App";
 import getCookie from "../customHooks/GetCookie";
-
-import axios from "axios";
+import axios from "../api/axios";
+const LOGIN_URL = "/admins/login";
 
 const theme = createTheme();
 const errorStyle = {
@@ -35,6 +35,7 @@ const Login = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
   const myContextValue = useContext(MyContext);
+  const errRef = useRef();
 
   useEffect(() => {
     if (loginData) {
@@ -72,22 +73,39 @@ const Login = () => {
     )}; expires=${expires}; path=/`;
   }
 
+  // const handleSubmit2 = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmit(true);
+  //   setFormErrors(validate(formValues));
+  //   try {
+  //     const response = await axios.post(LOGIN_URL, formValues);
+  //     setCookie("id", `${response.data.data.id}`, 1);
+  //     setCookie("email", `${response.data.data.email}`, 1);
+  //     setCookie("name", `${response.data.data.name}`, 1);
+  //     setCookie("token", `${response.data.data.token}`, 1);
+  //     setLoginData(response.data);
+  //     myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
+  //   } catch (err) {
+  //     if (err?.response?.status === 401) {
+  //       setFormErrors({ creds: "wrong email or password" });
+  //       errRef.current.foucs();
+  //     } else {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsSubmit(true);
     setFormErrors(validate(formValues));
 
     axios
-      .post(
-        "https://staging-blockchain-payment.livaat.com/api/admins/login",
-        formValues
-      )
+      .post(LOGIN_URL, formValues)
       .then((res) => {
         setCookie("id", `${res.data.data.id}`, 1);
         setCookie("email", `${res.data.data.email}`, 1);
         setCookie("name", `${res.data.data.name}`, 1);
         setCookie("token", `${res.data.data.token}`, 1);
-
         setLoginData(res.data);
         myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
       })
@@ -121,7 +139,9 @@ const Login = () => {
             <Typography style={{ color: "black" }} component="h1" variant="h5">
               Sign in
             </Typography>
-            <p style={errorStyle}>{formErrors?.creds}</p>
+            <p ref={errRef} style={errorStyle}>
+              {formErrors?.creds}
+            </p>
             <Box
               component="form"
               onSubmit={handleSubmit}
