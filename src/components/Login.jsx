@@ -73,49 +73,26 @@ const Login = () => {
     )}; expires=${expires}; path=/`;
   }
 
-  // const handleSubmit2 = async (e) => {
-  //   e.preventDefault();
-  //   setIsSubmit(true);
-  //   setFormErrors(validate(formValues));
-  //   try {
-  //     const response = await axios.post(LOGIN_URL, formValues);
-  //     setCookie("id", `${response.data.data.id}`, 1);
-  //     setCookie("email", `${response.data.data.email}`, 1);
-  //     setCookie("name", `${response.data.data.name}`, 1);
-  //     setCookie("token", `${response.data.data.token}`, 1);
-  //     setLoginData(response.data);
-  //     myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
-  //   } catch (err) {
-  //     if (err?.response?.status === 401) {
-  //       setFormErrors({ creds: "wrong email or password" });
-  //       errRef.current.foucs();
-  //     } else {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsSubmit(true);
     setFormErrors(validate(formValues));
-
-    axios
-      .post(LOGIN_URL, formValues)
-      .then((res) => {
-        setCookie("id", `${res.data.data.id}`, 1);
-        setCookie("email", `${res.data.data.email}`, 1);
-        setCookie("name", `${res.data.data.name}`, 1);
-        setCookie("token", `${res.data.data.token}`, 1);
-        setLoginData(res.data);
-        myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
-      })
-      .catch((err) => {
-        if (err?.response?.status === 401) {
-          setFormErrors({ creds: "wrong email or password" });
-        } else {
-          console.log(err);
-        }
-      });
+    try {
+      const response = await axios.post(LOGIN_URL, formValues);
+      setCookie("id", `${response.data.data.id}`, 1);
+      setCookie("email", `${response.data.data.email}`, 1);
+      setCookie("name", `${response.data.data.name}`, 1);
+      setCookie("token", `${response.data.data.token}`, 1);
+      setLoginData(response.data);
+      myContextValue.setIsLoggedIn(!myContextValue.isLoggedIn);
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        setFormErrors({ creds: "wrong email or password" });
+        errRef.current.foucs();
+      } else {
+        console.log(err);
+      }
+    }
   };
 
   return (
